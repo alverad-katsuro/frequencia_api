@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: dev 
+    default: homol 
     #active: @activatedProperties@
   application:
     name: Frequencia API
@@ -30,3 +30,10 @@ logging:
 rsa:
   public-key: classpath:certs/public.pem
   private-key: classpath:certs/private.pem
+
+springdoc:
+  swagger-ui:
+    use-root-path: true
+  show-login-endpoint: true
+  api-docs:
+    path: /v3/api-docs

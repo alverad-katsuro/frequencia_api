@@ -1,1 +1,1 @@
-INSERT INTO Grupo (id, nome_grupo) values (nextval('grupo_seq'), 'ADMINISTRADOR');
+INSERT INTO grupo (id, nome_grupo) values (nextval('grupo_seq'), 'ADMINISTRADOR');

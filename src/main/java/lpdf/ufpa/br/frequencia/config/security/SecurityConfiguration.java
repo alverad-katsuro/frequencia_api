@@ -28,16 +28,19 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
 				.cors().and()
-				.csrf()
-				.disable()
+				.csrf().disable()
 				.authorizeHttpRequests()
-				.requestMatchers("/auth/**", "/usuario/cadastrar")
+				.requestMatchers(
+						"/auth/**",
+						"/usuario/cadastrar", 
+						"/v3/**",
+						"/swagger-ui/**",
+						"/swagger-ui.html",
+						"/")
 				.permitAll()
-				.anyRequest()
-				.authenticated()
+				.anyRequest().authenticated()
 				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
 				.exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
@@ -55,8 +58,8 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-	
+	public PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+
 }

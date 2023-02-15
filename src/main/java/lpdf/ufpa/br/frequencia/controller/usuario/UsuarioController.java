@@ -3,8 +3,7 @@ package lpdf.ufpa.br.frequencia.controller.usuario;
 import java.util.Collection;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,12 +30,10 @@ public class UsuarioController {
     }
 
     //@PreAuthorize("hasRole('ADMINISTRADOR')")
-    //@Secured({"ADMINISTRADOR"})
+    //@Secured({"ADMINISTRADOR"})   
     @GetMapping(value = "/teste")
-    public Collection<?> teste(){
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-
-        return securityContext.getAuthentication().getAuthorities();
+    public Collection<?> teste(Authentication auth){
+        return auth.getAuthorities();
     }
     
 }
