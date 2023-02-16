@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import lpdf.ufpa.br.frequencia.model.Usuario;
 import lpdf.ufpa.br.frequencia.repository.usuario.UsuarioRepository;
-import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +29,10 @@ public class UsuarioService implements UserDetailsService {
     public Usuario save(Usuario usuario) {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
+    }
+
+    public Iterable<Usuario> findAll(){
+        return usuarioRepository.findAll();
     }
     
 }

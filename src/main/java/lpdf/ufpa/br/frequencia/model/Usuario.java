@@ -2,11 +2,12 @@ package lpdf.ufpa.br.frequencia.model;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,7 +16,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,7 +41,7 @@ public class Usuario implements UserDetails {
 
     @Column(name = "ultimo_login")
     private Date lastLogin;
-    
+
     @Column(name = "bloqueado", nullable = false)
     private Boolean locked = false;
 
@@ -51,14 +54,14 @@ public class Usuario implements UserDetails {
     @Column(name = "ativo", nullable = false)
     private Boolean enabled = true;
 
-    @OneToMany(mappedBy= "usuario", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Set<UsuarioGrupo> usuarioGrupos = new HashSet<>(0);
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinTable(name = "UsuarioGrupo", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+    private Set<Grupo> grupos;
 
     @Override
-    public Collection<GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> grupos = new HashSet<>(0);
-        this.usuarioGrupos.forEach(e -> grupos.add(e.grupo));
-        return grupos;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.grupos;
     }
 
     @Override

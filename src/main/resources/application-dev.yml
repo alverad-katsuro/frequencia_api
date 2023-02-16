@@ -7,8 +7,8 @@ spring:
     add-properties: true
   datasource:
     url: jdbc:postgresql://localhost:5432/frequencia
-    username: frequencia
-    password: frequencia
+    username: alverad
+    password: 0279
     driver-class-name: org.postgresql.Driver
     
   jpa:

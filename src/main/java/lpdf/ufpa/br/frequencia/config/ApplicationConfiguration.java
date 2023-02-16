@@ -15,7 +15,7 @@ import lpdf.ufpa.br.frequencia.services.usuario.UsuarioService;
 public class ApplicationConfiguration {
 
     private final UsuarioService usuarioService;
-
+                              
     @Bean
     public UserDetailsService userDetailsService() {
       return this.usuarioService;

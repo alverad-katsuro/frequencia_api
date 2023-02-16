@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: homol 
+    default: dev 
     #active: @activatedProperties@
   application:
     name: Frequencia API
